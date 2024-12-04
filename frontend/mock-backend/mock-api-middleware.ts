@@ -14,6 +14,7 @@
 
 import * as express from 'express';
 import { Response } from 'express-serve-static-core';
+import escapeHtml from 'escape-html';
 import * as fs from 'fs';
 import * as _path from 'path';
 import { ApiExperiment, ApiListExperimentsResponse } from '../src/apis/experiment';
@@ -363,7 +364,7 @@ export default (app: express.Application) => {
         job.enabled = true;
         res.json({});
       } else {
-        res.status(500).send('Cannot find a job with id ' + req.params.jid);
+        res.status(500).send('Cannot find a job with id ' + escapeHtml(req.params.jid));
       }
     }, 1000);
   });
@@ -375,7 +376,7 @@ export default (app: express.Application) => {
         job.enabled = false;
         res.json({});
       } else {
-        res.status(500).send('Cannot find a job with id ' + req.params.jid);
+        res.status(500).send('Cannot find a job with id ' + escapeHtml(req.params.jid));
       }
     }, 1000);
   });
