@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import * as express from 'express';
+import * as escape from 'escape-html';
 import { Response } from 'express-serve-static-core';
 import * as fs from 'fs';
 import * as _path from 'path';
@@ -315,7 +316,7 @@ export default (app: express.Application) => {
     const rid = req.params.rid;
     const run = fixedData.runs.find(r => r.run!.id === rid);
     if (!run) {
-      res.status(404).send('Cannot find a run with id: ' + rid);
+      res.status(404).send('Cannot find a run with id: ' + escape(rid));
       return;
     }
     res.json(run);
@@ -352,7 +353,7 @@ export default (app: express.Application) => {
           : ApiRunStorageState.AVAILABLE;
       res.json({});
     } else {
-      res.status(500).send('Cannot find a run with id ' + req.params.rid);
+      res.status(500).send('Cannot find a run with id ' + escape(req.params.rid));
     }
   });
 
@@ -363,7 +364,7 @@ export default (app: express.Application) => {
         job.enabled = true;
         res.json({});
       } else {
-        res.status(500).send('Cannot find a job with id ' + req.params.jid);
+        res.status(500).send('Cannot find a job with id ' + escape(req.params.jid));
       }
     }, 1000);
   });
@@ -375,7 +376,7 @@ export default (app: express.Application) => {
         job.enabled = false;
         res.json({});
       } else {
-        res.status(500).send('Cannot find a job with id ' + req.params.jid);
+        res.status(500).send('Cannot find a job with id ' + escape(req.params.jid));
       }
     }, 1000);
   });
